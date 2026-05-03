@@ -35,15 +35,27 @@ const messages = {
 			],
 			locationsTitle: 'Locations',
 			locations: [
-				'Casa di Cura La Madonnina, Milan',
-				'Rome American Hospital, Rome',
-				'Clinica Mediterranea, Naples',
-				'The London Clinic, London',
+				{
+					label: 'Casa di Cura La Madonnina, Milan',
+					mapUrl: 'https://www.google.com/maps/search/?api=1&query=Casa%20di%20Cura%20La%20Madonnina%20Milan',
+				},
+				{
+					label: 'Rome American Hospital, Rome',
+					mapUrl: 'https://www.google.com/maps/search/?api=1&query=Rome%20American%20Hospital%20Rome',
+				},
+				{
+					label: 'Clinica Mediterranea, Naples',
+					mapUrl: 'https://www.google.com/maps/search/?api=1&query=Clinica%20Mediterranea%20Naples',
+				},
+				{
+					label: 'The London Clinic, London',
+					mapUrl: 'https://www.google.com/maps/search/?api=1&query=The%20London%20Clinic%20London',
+				},
 			],
 			contactTitle: 'Contact',
 			contactLines: ['+39 02 1234 5678 (IT)', '+44 20 1234 5678 (UK)', 'info@drperrotta.com'],
 			legal: ['Privacy Policy', 'Cookie Policy', 'Terms of Use'],
-			copyright: '© 2026 Dr. Gerardo Perrotta. All rights reserved.',
+			copyright: '\u00A9 2026 Dr. Gerardo Perrotta. All rights reserved.',
 		},
 		home: {
 			hero: {
@@ -85,6 +97,8 @@ const messages = {
 						address: 'Via Quadronno, 29',
 						postalCode: '20122 Milano MI',
 						mapLabel: 'View Map',
+						mapUrl:
+							'https://www.google.com/maps/search/?api=1&query=Casa%20di%20Cura%20La%20Madonnina%20Via%20Quadronno%2029%20Milan',
 						image:
 							'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80',
 					},
@@ -95,6 +109,8 @@ const messages = {
 						address: 'Via Emilio Longoni, 81',
 						postalCode: '00155 Roma RM',
 						mapLabel: 'View Map',
+						mapUrl:
+							'https://www.google.com/maps/search/?api=1&query=Rome%20American%20Hospital%20Via%20Emilio%20Longoni%2081%20Rome',
 						image:
 							'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80',
 					},
@@ -105,6 +121,8 @@ const messages = {
 						address: 'Via Orazio, 2',
 						postalCode: '80122 Napoli NA',
 						mapLabel: 'View Map',
+						mapUrl:
+							'https://www.google.com/maps/search/?api=1&query=Clinica%20Mediterranea%20Via%20Orazio%202%20Naples',
 						image:
 							'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=80',
 					},
@@ -115,6 +133,8 @@ const messages = {
 						address: '20 Devonshire Place',
 						postalCode: 'London W1G 6BW',
 						mapLabel: 'View Map',
+						mapUrl:
+							'https://www.google.com/maps/search/?api=1&query=The%20London%20Clinic%2020%20Devonshire%20Place%20London',
 						image:
 							'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=900&q=80',
 					},
@@ -142,7 +162,7 @@ const messages = {
 			},
 			images: {
 				hero:
-					'https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1600&q=80',
+					'https://images.pexels.com/photos/19563295/pexels-photo-19563295.jpeg?auto=compress&cs=tinysrgb&w=1600',
 				portrait:
 					'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80',
 			},
