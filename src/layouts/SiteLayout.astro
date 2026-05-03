@@ -1,0 +1,40 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { defaultLocale, resolveLocale, type Locale } from '../i18n/config';
+import { getMessages } from '../i18n/messages';
+
+interface Props {
+	title?: string;
+	description?: string;
+	locale?: Locale;
+	currentPath?: string;
+}
+
+const {
+	title,
+	description,
+	locale: requestedLocale = defaultLocale,
+	currentPath = Astro.url.pathname,
+} = Astro.props;
+
+const locale = resolveLocale(requestedLocale);
+const messages = getMessages(locale);
+const pageTitle = title ?? messages.metadata.title;
+const pageDescription = description ?? messages.metadata.description;
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<BaseHead title={pageTitle} description={pageDescription} />
+	</head>
+	<body>
+		<Header locale={locale} content={messages.header} currentPath={currentPath} />
+		<main>
+			<slot />
+		</main>
+		<Footer content={messages.footer} />
+	</body>
+</html>
