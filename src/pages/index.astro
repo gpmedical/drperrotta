@@ -7,27 +7,6 @@ const locale = defaultLocale;
 const messages = getMessages(locale);
 const home = messages.home;
 
-const accreditations = [
-	{ label: 'NHS', icon: 'cross' },
-	{ label: 'SICCR', icon: 'briefcase' },
-	{ label: 'GMC', icon: 'shield' },
-	{ label: 'SICE', icon: 'clipboard' },
-];
-
-const conditions = [
-	{ ...home.conditions.items[0], icon: 'colon' },
-	{ ...home.conditions.items[1], icon: 'target' },
-	{ ...home.conditions.items[2], icon: 'cells' },
-	{ ...home.conditions.items[3], icon: 'chart' },
-	{ ...home.conditions.items[4], icon: 'colon' },
-	{ ...home.conditions.items[5], icon: 'asterisk' },
-];
-
-const expertiseCards = home.about.cards.map((card, index) => ({
-	...card,
-	icon: index === 0 ? 'scope' : 'shield',
-}));
-
 const icons = {
 	cross: '<path d="M5 4h10v12H5zM10 7v6M7 10h6"></path>',
 	briefcase: '<path d="M4 7h12v8H4zM8 7V5h4v2M4 10h12"></path>',
@@ -42,6 +21,29 @@ const icons = {
 	chart: '<path d="M5 14h10M6.5 12V8M10 12V5M13.5 12V9"></path>',
 	asterisk: '<path d="M10 4v12M4.8 7l10.4 6M15.2 7 4.8 13"></path>',
 } as const;
+
+type IconName = keyof typeof icons;
+
+const accreditations = [
+	{ label: 'NHS', icon: 'cross' },
+	{ label: 'SICCR', icon: 'briefcase' },
+	{ label: 'GMC', icon: 'shield' },
+	{ label: 'SICE', icon: 'clipboard' },
+] as const satisfies ReadonlyArray<{ label: string; icon: IconName }>;
+
+const conditions = [
+	{ ...home.conditions.items[0], icon: 'colon' },
+	{ ...home.conditions.items[1], icon: 'target' },
+	{ ...home.conditions.items[2], icon: 'cells' },
+	{ ...home.conditions.items[3], icon: 'chart' },
+	{ ...home.conditions.items[4], icon: 'colon' },
+	{ ...home.conditions.items[5], icon: 'asterisk' },
+] as const satisfies ReadonlyArray<(typeof home.conditions.items)[number] & { icon: IconName }>;
+
+const expertiseCards = home.about.cards.map((card, index) => ({
+	...card,
+	icon: index === 0 ? 'scope' : 'shield',
+})) as Array<(typeof home.about.cards)[number] & { icon: IconName }>;
 ---
 
 <SiteLayout locale={locale} currentPath="/">
