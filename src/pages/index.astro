@@ -8,18 +8,18 @@ const messages = getMessages(locale);
 const home = messages.home;
 
 const icons = {
-	cross: '<path d="M5 4h10v12H5zM10 7v6M7 10h6"></path>',
-	briefcase: '<path d="M4 7h12v8H4zM8 7V5h4v2M4 10h12"></path>',
-	shield: '<path d="M10 3 15 5v4.5c0 3-2 5.4-5 7-3-1.6-5-4-5-7V5l5-2Z"></path>',
-	clipboard: '<path d="M7 4h6v3H7zM6 6H5v10h10V6h-1M8 10h4M8 13h4"></path>',
-	scope: '<path d="M10 4v12M6.5 7.5h7M7 12.5h6M5 16h10"></path>',
-	colon:
-		'<path d="M10 5c2.6 0 4 1.4 4 3.3 0 1.5-.9 2.6-2.4 3 .7.5 1.1 1.2 1.1 2.1 0 1.6-1.2 2.8-3.2 2.8H7V13h2.2c.8 0 1.2-.3 1.2-.9s-.5-.9-1.4-.9H7V8h2.7c.8 0 1.2-.3 1.2-.9S10.5 6 9.7 6H7V5h3Z"></path>',
-	target:
-		'<path d="M10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"></path><path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>',
-	cells: '<path d="M6 7h3v3H6zM11 7h3v3h-3zM8.5 12h3v3h-3z"></path>',
-	chart: '<path d="M5 14h10M6.5 12V8M10 12V5M13.5 12V9"></path>',
-	asterisk: '<path d="M10 4v12M4.8 7l10.4 6M15.2 7 4.8 13"></path>',
+	cross: ['M5 4h10v12H5zM10 7v6M7 10h6'],
+	briefcase: ['M4 7h12v8H4zM8 7V5h4v2M4 10h12'],
+	shield: ['M10 3 15 5v4.5c0 3-2 5.4-5 7-3-1.6-5-4-5-7V5l5-2Z'],
+	clipboard: ['M7 4h6v3H7zM6 6H5v10h10V6h-1M8 10h4M8 13h4'],
+	scope: ['M10 4v12M6.5 7.5h7M7 12.5h6M5 16h10'],
+	colon: [
+		'M10 5c2.6 0 4 1.4 4 3.3 0 1.5-.9 2.6-2.4 3 .7.5 1.1 1.2 1.1 2.1 0 1.6-1.2 2.8-3.2 2.8H7V13h2.2c.8 0 1.2-.3 1.2-.9s-.5-.9-1.4-.9H7V8h2.7c.8 0 1.2-.3 1.2-.9S10.5 6 9.7 6H7V5h3Z',
+	],
+	target: ['M10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z', 'M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'],
+	cells: ['M6 7h3v3H6zM11 7h3v3h-3zM8.5 12h3v3h-3z'],
+	chart: ['M5 14h10M6.5 12V8M10 12V5M13.5 12V9'],
+	asterisk: ['M10 4v12M4.8 7l10.4 6M15.2 7 4.8 13'],
 } as const;
 
 type IconName = keyof typeof icons;
@@ -31,14 +31,12 @@ const accreditations = [
 	{ label: 'SICE', icon: 'clipboard' },
 ] as const satisfies ReadonlyArray<{ label: string; icon: IconName }>;
 
-const conditions = [
-	{ ...home.conditions.items[0], icon: 'colon' },
-	{ ...home.conditions.items[1], icon: 'target' },
-	{ ...home.conditions.items[2], icon: 'cells' },
-	{ ...home.conditions.items[3], icon: 'chart' },
-	{ ...home.conditions.items[4], icon: 'colon' },
-	{ ...home.conditions.items[5], icon: 'asterisk' },
-] as const satisfies ReadonlyArray<(typeof home.conditions.items)[number] & { icon: IconName }>;
+const conditionIcons = ['colon', 'target', 'cells', 'chart', 'colon', 'asterisk'] as const satisfies ReadonlyArray<IconName>;
+
+const conditions = home.conditions.items.map((condition, index) => ({
+	...condition,
+	icon: conditionIcons[index % conditionIcons.length],
+})) as Array<(typeof home.conditions.items)[number] & { icon: IconName }>;
 
 const expertiseCards = home.about.cards.map((card, index) => ({
 	...card,
@@ -49,7 +47,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 <SiteLayout locale={locale} currentPath="/">
 	<section class="hero-section" aria-labelledby="hero-title">
 		<div class="hero-card" style={`--hero-image: url('${home.images.hero}')`}>
-			<div class="hero-overlay"></div>
 			<div class="hero-content">
 				<p class="hero-eyebrow">
 					<span aria-hidden="true"></span>
@@ -78,7 +75,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 					<div class="accreditation-item">
 						<span class="mini-icon" data-icon={item.icon} aria-hidden="true">
 							<svg viewBox="0 0 20 20">
-								<Fragment set:html={icons[item.icon]} />
+								{icons[item.icon].map((path) => <path d={path}></path>)}
 							</svg>
 						</span>
 						<span>{item.label}</span>
@@ -100,7 +97,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 							<article class="expertise-card">
 								<span class="card-icon" aria-hidden="true">
 									<svg viewBox="0 0 20 20">
-										<Fragment set:html={icons[card.icon]} />
+										{icons[card.icon].map((path) => <path d={path}></path>)}
 									</svg>
 								</span>
 								<h3>{card.title}</h3>
@@ -147,7 +144,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 								<p>{location.clinic}</p>
 								<p>{location.address}</p>
 								<p>{location.postalCode}</p>
-								<a href={location.mapUrl} target="_blank" rel="noreferrer">{location.mapLabel}</a>
+								<a href={location.mapUrl} target="_blank" rel="noopener noreferrer">{location.mapLabel}</a>
 							</div>
 						</article>
 					))
@@ -175,7 +172,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 						<a href="/treatments" class="condition-card">
 							<span class="condition-icon" data-icon={condition.icon} aria-hidden="true">
 								<svg viewBox="0 0 20 20">
-									<Fragment set:html={icons[condition.icon]} />
+									{icons[condition.icon].map((path) => <path d={path}></path>)}
 								</svg>
 							</span>
 							<span>
@@ -206,6 +203,22 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 </SiteLayout>
 
 <style>
+	:global(:root) {
+		--home-accent: var(--accent);
+		--home-accent-hover: #0878dc;
+		--home-accent-dark: var(--accent-dark);
+		--home-accent-deep: #064f92;
+		--home-accent-soft: #eaf4ff;
+		--home-accent-tint: #eef7ff;
+		--home-surface: var(--surface);
+		--home-surface-soft: var(--surface-soft);
+		--home-surface-muted: #f4f7fb;
+		--home-border: var(--border);
+		--home-text: #111827;
+		--home-text-muted: #667085;
+		--home-focus-ring: 0 0 0 3px rgba(20, 127, 232, 0.24);
+	}
+
 	.page-grid {
 		width: min(100% - 48px, 1200px);
 		margin: 0 auto;
@@ -213,7 +226,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.hero-section {
 		padding: 0;
-		background: #fff;
+		background: var(--home-surface);
 	}
 
 	.hero-card {
@@ -233,18 +246,20 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		animation: fade-up 520ms ease both;
 	}
 
-	.hero-overlay {
+	.hero-card::after {
 		position: absolute;
 		inset: 0;
 		background: linear-gradient(180deg, rgba(8, 109, 151, 0.22), rgba(1, 16, 28, 0.45));
+		content: '';
+		pointer-events: none;
 	}
 
 	.hero-content {
 		position: relative;
 		z-index: 1;
-		width: min(610px, 72%);
-		padding: 76px 0 76px 64px;
-		color: #fff;
+		width: min(650px, 72%);
+		padding: 78px 0 78px 64px;
+		color: var(--home-surface);
 	}
 
 	.hero-eyebrow,
@@ -274,9 +289,9 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	}
 
 	.hero-content h1 {
-		max-width: 590px;
+		max-width: 620px;
 		margin-bottom: 24px;
-		color: #fff;
+		color: var(--home-surface);
 		font-size: clamp(2.65rem, 4.35vw, 3.6rem);
 		font-weight: 700;
 		letter-spacing: 0;
@@ -330,14 +345,15 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	}
 
 	.button-primary {
-		background: #1687f2;
-		color: #fff;
+		background: var(--home-accent);
+		color: var(--home-surface);
 		box-shadow: 0 8px 15px rgba(1, 67, 121, 0.3);
 	}
 
-	.button-primary:hover {
-		background: #0878dc;
-		color: #fff;
+	.button-primary:hover,
+	.button-primary:focus-visible {
+		background: var(--home-accent-hover);
+		color: var(--home-surface);
 		transform: translateY(-2px);
 		box-shadow: 0 12px 22px rgba(1, 67, 121, 0.32);
 	}
@@ -345,19 +361,29 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	.button-secondary {
 		border: 1px solid rgba(255, 255, 255, 0.35);
 		background: rgba(5, 18, 31, 0.52);
-		color: #fff;
+		color: var(--home-surface);
 		backdrop-filter: blur(8px);
 	}
 
-	.button-secondary:hover {
+	.button-secondary:hover,
+	.button-secondary:focus-visible {
 		border-color: rgba(255, 255, 255, 0.56);
-		color: #fff;
+		color: var(--home-surface);
 		transform: translateY(-2px);
+	}
+
+	.button:focus-visible,
+	.text-link:focus-visible,
+	.condition-card:focus-visible,
+	.location-body a:focus-visible {
+		outline: 2px solid var(--home-accent);
+		outline-offset: 3px;
+		box-shadow: var(--home-focus-ring);
 	}
 
 	.accreditation-strip {
 		border-bottom: 1px solid #e3e8ef;
-		background: #fff;
+		background: var(--home-surface);
 	}
 
 	.strip-inner {
@@ -399,7 +425,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.about-section {
 		padding: 96px 0 88px;
-		background: linear-gradient(90deg, #f7f9fc 0%, #f3f6fa 52%, #eef3f8 100%);
+		background: linear-gradient(90deg, var(--home-surface-soft) 0%, #f3f6fa 52%, #eef3f8 100%);
 	}
 
 	.about-grid {
@@ -411,7 +437,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.section-kicker {
 		margin-bottom: 28px;
-		color: #1687f2;
+		color: var(--home-accent);
 	}
 
 	.section-kicker span {
@@ -449,7 +475,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		padding: 22px 20px;
 		border: 1px solid #dfe6ee;
 		border-radius: 10px;
-		background: #fff;
+		background: var(--home-surface);
 		box-shadow: 0 8px 16px rgba(16, 30, 54, 0.04);
 		transition:
 			border-color 180ms ease,
@@ -470,8 +496,8 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		height: 36px;
 		place-items: center;
 		border-radius: 8px;
-		background: #eaf4ff;
-		color: #1687f2;
+		background: var(--home-accent-soft);
+		color: var(--home-accent);
 	}
 
 	.card-icon svg,
@@ -504,7 +530,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		align-items: center;
 		gap: 8px;
 		margin-top: 42px;
-		color: #1687f2;
+		color: var(--home-accent);
 		font-size: 0.9rem;
 		font-weight: 700;
 		transition:
@@ -512,8 +538,9 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 			transform 180ms ease;
 	}
 
-	.text-link:hover {
-		color: #075aa8;
+	.text-link:hover,
+	.text-link:focus-visible {
+		color: var(--home-accent-dark);
 		transform: translateX(3px);
 	}
 
@@ -522,7 +549,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		overflow: hidden;
 		margin: 0;
 		border-radius: 22px;
-		background: #fff;
+		background: var(--home-surface);
 		box-shadow: 0 20px 32px rgba(15, 34, 62, 0.24);
 		transition:
 			box-shadow 220ms ease,
@@ -571,7 +598,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.presence-section {
 		padding: 70px 0 82px;
-		background: #f7f9fc;
+		background: var(--home-surface-soft);
 	}
 
 	.section-heading {
@@ -593,7 +620,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.section-heading p,
 	.conditions-heading p {
-		color: #667085;
+		color: var(--home-text-muted);
 		font-size: 1rem;
 	}
 
@@ -605,9 +632,9 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.location-card {
 		overflow: hidden;
-		border: 1px solid #dfe6ee;
+		border: 1px solid var(--home-border);
 		border-radius: 10px;
-		background: #fff;
+		background: var(--home-surface);
 		transition:
 			border-color 180ms ease,
 			box-shadow 180ms ease,
@@ -643,7 +670,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		right: 10px;
 		padding: 5px 11px;
 		border-radius: 999px;
-		background: #fff;
+		background: var(--home-surface);
 		color: #516071;
 		font-size: 0.68rem;
 		font-weight: 700;
@@ -667,7 +694,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		width: 16px;
 		height: 16px;
 		fill: none;
-		color: #1687f2;
+		color: var(--home-accent);
 		stroke: currentColor;
 		stroke-linecap: round;
 		stroke-linejoin: round;
@@ -676,7 +703,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 	.location-body p {
 		margin: 0 0 6px;
-		color: #667085;
+		color: var(--home-text-muted);
 		font-size: 0.78rem;
 		line-height: 1.28;
 	}
@@ -689,7 +716,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		margin-top: 18px;
 		border: 1px solid #dbe4ee;
 		border-radius: 8px;
-		color: #111827;
+		color: var(--home-text);
 		font-size: 0.8rem;
 		font-weight: 600;
 		transition:
@@ -698,15 +725,16 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 			color 180ms ease;
 	}
 
-	.location-body a:hover {
-		border-color: #1687f2;
-		background: #eef7ff;
-		color: #075aa8;
+	.location-body a:hover,
+	.location-body a:focus-visible {
+		border-color: var(--home-accent);
+		background: var(--home-accent-tint);
+		color: var(--home-accent-dark);
 	}
 
 	.conditions-section {
 		padding: 70px 0 62px;
-		background: #f4f7fb;
+		background: var(--home-surface-muted);
 	}
 
 	.conditions-heading {
@@ -734,10 +762,10 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		gap: 15px;
 		min-height: 74px;
 		padding: 15px 17px;
-		border: 1px solid #dfe6ee;
+		border: 1px solid var(--home-border);
 		border-radius: 10px;
-		background: #fff;
-		color: #111827;
+		background: var(--home-surface);
+		color: var(--home-text);
 		box-shadow: 0 7px 18px rgba(16, 30, 54, 0.03);
 		transition:
 			border-color 180ms ease,
@@ -745,11 +773,16 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 			transform 180ms ease;
 	}
 
-	.condition-card:hover {
+	.condition-card:hover,
+	.condition-card:focus-visible {
 		border-color: #bcd7f3;
-		color: #111827;
+		color: var(--home-text);
 		box-shadow: 0 14px 28px rgba(16, 30, 54, 0.08);
 		transform: translateY(-2px);
+	}
+
+	.condition-card:focus-visible {
+		box-shadow: var(--home-focus-ring), 0 14px 28px rgba(16, 30, 54, 0.08);
 	}
 
 	.condition-card strong,
@@ -764,7 +797,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	}
 
 	.condition-card small {
-		color: #667085;
+		color: var(--home-text-muted);
 		font-size: 0.76rem;
 	}
 
@@ -785,8 +818,8 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	}
 
 	.cta-section {
-		background: #1f87e9;
-		color: #fff;
+		background: var(--home-accent);
+		color: var(--home-surface);
 	}
 
 	.cta-inner {
@@ -797,7 +830,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	}
 
 	.cta-inner h2 {
-		color: #fff;
+		color: var(--home-surface);
 		font-size: clamp(2rem, 3.2vw, 2.8rem);
 	}
 
@@ -816,26 +849,28 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	.cta-primary {
 		min-width: 244px;
 		min-height: 48px;
-		background: #fff;
-		color: #0b66bc;
+		background: var(--home-surface);
+		color: var(--home-accent-dark);
 	}
 
-	.cta-primary:hover {
-		color: #0b66bc;
+	.cta-primary:hover,
+	.cta-primary:focus-visible {
+		color: var(--home-accent-dark);
 		transform: translateY(-2px);
 	}
 
 	.cta-secondary {
 		min-width: 142px;
 		min-height: 48px;
-		border: 1px solid #0b5fb0;
-		background: #075aa8;
-		color: #fff;
+		border: 1px solid var(--home-accent-dark);
+		background: var(--home-accent-dark);
+		color: var(--home-surface);
 	}
 
-	.cta-secondary:hover {
-		color: #fff;
-		background: #064f92;
+	.cta-secondary:hover,
+	.cta-secondary:focus-visible {
+		color: var(--home-surface);
+		background: var(--home-accent-deep);
 		transform: translateY(-2px);
 	}
 
@@ -859,26 +894,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 			animation-iteration-count: 1 !important;
 			scroll-behavior: auto !important;
 			transition-duration: 0.01ms !important;
-		}
-	}
-
-	@media (min-width: 900px) {
-		.hero-card {
-			min-height: 520px;
-		}
-
-		.hero-content {
-			width: min(650px, 72%);
-			padding: 78px 0 78px 64px;
-		}
-
-		.hero-content h1 {
-			max-width: 620px;
-			font-size: clamp(2.65rem, 4.35vw, 3.6rem);
-		}
-
-		.hero-description {
-			font-size: 1.05rem;
 		}
 	}
 
@@ -935,10 +950,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 			padding: 22px 0;
 		}
 
-		.accreditation-item {
-			font-size: 1rem;
-		}
-
 		.about-section {
 			padding: 72px 0;
 		}
@@ -965,42 +976,16 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 		.expertise-cards {
 			max-width: 100%;
-			gap: 16px;
 		}
 
 		.expertise-card {
 			min-height: 150px;
-			padding: 22px 20px;
-		}
-
-		.card-icon,
-		.condition-icon {
-			width: 36px;
-			height: 36px;
-		}
-
-		.card-icon svg,
-		.condition-icon svg {
-			width: 18px;
-			height: 18px;
-		}
-
-		.expertise-card h3 {
-			font-size: 1rem;
 		}
 
 		.expertise-card p,
 		.location-body p,
 		.condition-card small {
 			font-size: 0.8rem;
-		}
-
-		.text-link {
-			font-size: 0.9rem;
-		}
-
-		.portrait-card figcaption {
-			font-size: 0.95rem;
 		}
 
 		.location-image {
@@ -1010,17 +995,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		.location-body h3,
 		.condition-card strong {
 			font-size: 1rem;
-		}
-
-		.location-body a {
-			height: 36px;
-			font-size: 0.8rem;
-		}
-
-		.condition-card {
-			grid-template-columns: 44px 1fr 18px;
-			min-height: 74px;
-			padding: 15px 17px;
 		}
 
 		.conditions-heading .text-link {
