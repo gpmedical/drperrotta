@@ -11,6 +11,23 @@ const { locale = defaultLocale, content = getMessages(locale).footer } = Astro.p
 ---
 
 <footer class="site-footer">
+	<section class="footer-cta" aria-labelledby="footer-cta-title">
+		<div class="footer-cta-inner">
+			<h2 id="footer-cta-title">{content.cta.title}</h2>
+			<p>{content.cta.description}</p>
+			<div class="footer-cta-actions">
+				<a href="/contact" class="footer-button footer-cta-primary">
+					{content.cta.primary}
+					<svg viewBox="0 0 20 20" aria-hidden="true">
+						<rect x="4" y="5" width="12" height="11" rx="2"></rect>
+						<path d="M7 3v4M13 3v4M4 9h12"></path>
+					</svg>
+				</a>
+				<a href="/contact" class="footer-button footer-cta-secondary">{content.cta.secondary}</a>
+			</div>
+		</div>
+	</section>
+
 	<div class="footer-grid">
 		<div class="footer-brand">
 			<a class="brand" href="/">
@@ -99,6 +116,102 @@ const { locale = defaultLocale, content = getMessages(locale).footer } = Astro.p
 	.site-footer {
 		background: #fff;
 		color: #667085;
+	}
+
+	.footer-cta {
+		background: #147fe8;
+		color: #fff;
+	}
+
+	.footer-cta-inner {
+		width: min(100% - 64px, 720px);
+		margin: 0 auto;
+		padding: 66px 0 69px;
+		text-align: center;
+	}
+
+	.footer-cta-inner h2 {
+		margin-bottom: 14px;
+		color: #fff;
+		font-size: clamp(2rem, 3.2vw, 2.8rem);
+		line-height: 1.05;
+	}
+
+	.footer-cta-inner p {
+		max-width: 540px;
+		margin: 0 auto 31px;
+		color: rgba(255, 255, 255, 0.92);
+		font-size: 0.98rem;
+		line-height: 1.45;
+	}
+
+	.footer-cta-actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 14px;
+	}
+
+	.footer-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-height: 48px;
+		padding: 0 24px;
+		border-radius: 8px;
+		font-size: 0.92rem;
+		font-weight: 700;
+		line-height: 1;
+		white-space: nowrap;
+		transition:
+			background 180ms ease,
+			border-color 180ms ease,
+			box-shadow 180ms ease,
+			color 180ms ease,
+			transform 180ms ease;
+	}
+
+	.footer-button svg {
+		width: 16px;
+		height: 16px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 2;
+	}
+
+	.footer-cta-primary {
+		min-width: 244px;
+		background: #fff;
+		color: #075aa8;
+	}
+
+	.footer-cta-primary:hover,
+	.footer-cta-primary:focus-visible {
+		color: #075aa8;
+		transform: translateY(-2px);
+	}
+
+	.footer-cta-secondary {
+		min-width: 142px;
+		border: 1px solid #075aa8;
+		background: #075aa8;
+		color: #fff;
+	}
+
+	.footer-cta-secondary:hover,
+	.footer-cta-secondary:focus-visible {
+		background: #064f92;
+		color: #fff;
+		transform: translateY(-2px);
+	}
+
+	.footer-button:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 3px;
+		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
 	}
 
 	.footer-grid,
@@ -260,6 +373,31 @@ const { locale = defaultLocale, content = getMessages(locale).footer } = Astro.p
 	}
 
 	@media (max-width: 540px) {
+		.footer-cta-inner {
+			width: min(100% - 32px, 1200px);
+		}
+
+		.footer-cta-actions {
+			align-items: stretch;
+			flex-direction: column;
+		}
+
+		.footer-button {
+			width: 100%;
+			max-width: 100%;
+			min-height: 48px;
+			font-size: 0.84rem;
+		}
+
+		.footer-cta-inner p {
+			max-width: 100%;
+			font-size: 1rem;
+		}
+
+		.footer-cta-inner h2 {
+			font-size: clamp(2rem, 8vw, 2.8rem);
+		}
+
 		.footer-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 42px;

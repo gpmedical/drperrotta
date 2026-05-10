@@ -24,6 +24,13 @@ const messages = {
 			languageComingSoon: 'Italian coming soon',
 		},
 		footer: {
+			cta: {
+				title: 'Ready to prioritize your health?',
+				description:
+					'Schedule a consultation to discuss your personalized treatment plan. Telemedicine appointments also available.',
+				primary: 'Book a Consultation',
+				secondary: 'Contact Us',
+			},
 			description:
 				'Dedicated to providing high-quality surgical care with a patient-centered approach, licensed in Italy and the UK.',
 			quickLinksTitle: 'Quick Links',
@@ -153,13 +160,6 @@ const messages = {
 					{ title: 'Diverticular Disease', description: 'Diverticulosis & diverticulitis' },
 				],
 			},
-			cta: {
-				title: 'Ready to prioritize your health?',
-				description:
-					'Schedule a consultation to discuss your personalized treatment plan. Telemedicine appointments also available.',
-				primary: 'Book a Consultation',
-				secondary: 'Contact Us',
-			},
 			images: {
 				hero:
 					'https://images.pexels.com/photos/19563295/pexels-photo-19563295.jpeg?auto=compress&cs=tinysrgb&w=1600',
@@ -274,13 +274,6 @@ const messages = {
 					],
 				},
 			],
-			cta: {
-				title: 'Ready to discuss your health?',
-				description:
-					'Book a consultation at one of my clinics in London or Rome. Telemedicine appointments are also available.',
-				primary: 'Book Appointment',
-				secondary: 'Contact Clinic',
-			},
 		},
 	},
 	it: null,

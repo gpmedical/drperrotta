@@ -186,20 +186,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 			</div>
 		</div>
 	</section>
-
-	<section class="cta-section">
-		<div class="cta-inner">
-			<h2>{home.cta.title}</h2>
-			<p>{home.cta.description}</p>
-			<div class="cta-actions">
-				<a href="/contact" class="button cta-primary">
-					{home.cta.primary}
-					<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="5" width="12" height="11" rx="2"></rect><path d="M7 3v4M13 3v4M4 9h12"></path></svg>
-				</a>
-				<a href="/contact" class="button cta-secondary">{home.cta.secondary}</a>
-			</div>
-		</div>
-	</section>
 </SiteLayout>
 
 <style>
@@ -306,8 +292,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		line-height: 1.45;
 	}
 
-	.hero-actions,
-	.cta-actions {
+	.hero-actions {
 		display: flex;
 		align-items: center;
 		gap: 14px;
@@ -610,8 +595,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	}
 
 	.section-heading h2,
-	.conditions-heading h2,
-	.cta-inner h2 {
+	.conditions-heading h2 {
 		margin-bottom: 14px;
 		color: #07111f;
 		font-size: clamp(2rem, 3vw, 2.65rem);
@@ -817,63 +801,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		stroke-width: 2;
 	}
 
-	.cta-section {
-		background: var(--home-accent);
-		color: var(--home-surface);
-	}
-
-	.cta-inner {
-		width: min(100% - 64px, 720px);
-		margin: 0 auto;
-		padding: 66px 0 69px;
-		text-align: center;
-	}
-
-	.cta-inner h2 {
-		color: var(--home-surface);
-		font-size: clamp(2rem, 3.2vw, 2.8rem);
-	}
-
-	.cta-inner p {
-		max-width: 540px;
-		margin: 0 auto 31px;
-		color: rgba(255, 255, 255, 0.92);
-		font-size: 0.98rem;
-		line-height: 1.45;
-	}
-
-	.cta-actions {
-		justify-content: center;
-	}
-
-	.cta-primary {
-		min-width: 244px;
-		min-height: 48px;
-		background: var(--home-surface);
-		color: var(--home-accent-dark);
-	}
-
-	.cta-primary:hover,
-	.cta-primary:focus-visible {
-		color: var(--home-accent-dark);
-		transform: translateY(-2px);
-	}
-
-	.cta-secondary {
-		min-width: 142px;
-		min-height: 48px;
-		border: 1px solid var(--home-accent-dark);
-		background: var(--home-accent-dark);
-		color: var(--home-surface);
-	}
-
-	.cta-secondary:hover,
-	.cta-secondary:focus-visible {
-		color: var(--home-surface);
-		background: var(--home-accent-deep);
-		transform: translateY(-2px);
-	}
-
 	@keyframes fade-up {
 		from {
 			opacity: 0;
@@ -900,8 +827,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 	@media (max-width: 540px) {
 		.page-grid,
 		.hero-card,
-		.strip-inner,
-		.cta-inner {
+		.strip-inner {
 			width: min(100% - 32px, 1200px);
 		}
 
@@ -931,7 +857,6 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		}
 
 		.hero-actions,
-		.cta-actions,
 		.conditions-heading {
 			align-items: stretch;
 			flex-direction: column;
@@ -968,8 +893,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 
 		.about-copy > p,
 		.section-heading p,
-		.conditions-heading p,
-		.cta-inner p {
+		.conditions-heading p {
 			max-width: 100%;
 			font-size: 1rem;
 		}
@@ -1002,8 +926,7 @@ const expertiseCards = home.about.cards.map((card, index) => ({
 		}
 
 		.section-heading h2,
-		.conditions-heading h2,
-		.cta-inner h2 {
+		.conditions-heading h2 {
 			font-size: clamp(2rem, 8vw, 2.8rem);
 		}
 	}
