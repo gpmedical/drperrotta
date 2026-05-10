@@ -167,6 +167,121 @@ const messages = {
 					'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80',
 			},
 		},
+		about: {
+			metadata: {
+				title: 'About Dr. Gerardo Perrotta | General and Colorectal Surgeon',
+				description:
+					'Learn more about Dr. Gerardo Perrotta, his surgical philosophy, international training, credentials, and professional memberships.',
+			},
+			hero: {
+				badges: ['GMC Registered', 'English & Italian'],
+				title: {
+					lineOne: 'Bridging',
+					lineTwo: 'Borders in',
+					lineThree: 'Surgical',
+					lineFour: 'Excellence',
+				},
+				description:
+					'Specialist General & Colorectal Surgeon practicing in Italy and the UK. Dedicated to providing patient-centered care with international expertise and a compassionate touch.',
+				primaryCta: 'Book Consultation',
+				secondaryCta: 'View My CV',
+				image: '/about-portrait.png',
+				imageAlt: 'Portrait of Dr. Gerardo Perrotta',
+			},
+			biography: {
+				titleLineOne: 'Biography &',
+				titleLineTwo: 'Philosophy',
+				paragraphs: [
+					'Dr. Perrotta believes in a holistic approach to surgery, combining advanced technical skills with compassionate patient care. With extensive experience in both the Italian and UK healthcare systems, he brings a unique cross-border perspective to colorectal and general surgery.',
+					'His journey began with a deep curiosity about the human body and a desire to make a tangible difference in people\'s lives. This led him to pursue rigorous training across Europe, allowing him to master diverse surgical techniques and patient care protocols.',
+					'Today, Dr. Perrotta is committed to minimally invasive techniques that reduce recovery time and improve outcomes. He views every patient interaction as a partnership, ensuring that individuals feel heard, understood, and confident in their treatment plan.',
+				],
+			},
+			career: {
+				title: 'Career Journey',
+				description: 'A timeline of professional milestones across Europe.',
+				items: [
+					{
+						period: '2018 - Present',
+						title: 'Consultant General Surgeon',
+						location: 'London, United Kingdom',
+						description: 'Leading complex colorectal procedures and mentoring junior surgeons in NHS trusts.',
+					},
+					{
+						period: '2015 - 2018',
+						title: 'Fellowship in Colorectal Surgery',
+						location: 'Rome, Italy',
+						description: 'Specialized training focusing on laparoscopic techniques and oncological surgery.',
+					},
+					{
+						period: '2010 - 2015',
+						title: 'Residency in General Surgery',
+						location: 'University of Naples, Italy',
+						description: 'Comprehensive training in emergency and elective surgery.',
+					},
+				],
+			},
+			credentials: [
+				{
+					title: 'Education',
+					items: [
+						{
+							label: 'Doctor of Medicine (MD)',
+							detail: 'University of Naples Federico II, Italy',
+						},
+						{
+							label: 'Specialization in General Surgery',
+							detail: 'Cum Laude',
+						},
+					],
+				},
+				{
+					title: 'Certifications',
+					items: [
+						{
+							label: 'Board Certified Surgeon',
+							detail: 'Italy & UK',
+						},
+						{
+							label: 'GMC Specialist Register',
+							detail: 'General Surgery',
+						},
+						{
+							label: 'Advanced Laparoscopy',
+							detail: 'Certified Practitioner',
+						},
+					],
+				},
+				{
+					title: 'Memberships',
+					items: [
+						{
+							label: 'General Medical Council (UK)',
+							detail: '',
+						},
+						{
+							label: 'Italian Medical Council',
+							detail: '',
+						},
+						{
+							label: 'Association of Coloproctology',
+							detail: '',
+						},
+						{
+							label: 'European Society of Surgery',
+							detail: '',
+						},
+					],
+				},
+			],
+			cta: {
+				title: 'Ready to discuss your health?',
+				description:
+					'Book a consultation at one of my clinics in London or Rome. Telemedicine appointments are also available.',
+				primary: 'Book Appointment',
+				secondary: 'Contact Clinic',
+			},
+		},
 	},
 	it: null,
 } as const;
